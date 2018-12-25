@@ -1,3 +1,4 @@
+import { GET_PROFILE, PROFILE_LOADING } from '../actions/types'
 
 const initialState = {
   profile: null,
@@ -7,9 +8,17 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case expression:
-
-      break;
+    case PROFILE_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
+    case GET_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
+        loading: false
+      }
     default:
       return state;
   }
