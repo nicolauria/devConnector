@@ -2,3 +2,13 @@ implement auth routes so logged in user cannot access /login or /register
 
 clearCurrentUser used in Navbar.js and App.js
 - conside just putting action into logoutUser() function
+
+functional and class components
+anything that we need access to is in this.props
+we pass in props from our component and in mSTP, mDTP
+we then deconstruct those props
+
+when creating a private route (private.js) the component will not
+successfully render unless you include withRouter on the wrapped component
+- i believe this may have something to do with webpack
+- putting a switch around the component also fixed the bug
