@@ -1,1 +1,4 @@
 implement auth routes so logged in user cannot access /login or /register
+
+clearCurrentUser used in Navbar.js and App.js
+- conside just putting action into logoutUser() function

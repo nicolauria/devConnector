@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-
+  getCurrentProfile: PropTypes.func.isRequired
 }
 
 export default connect(null, { getCurrentProfile })(Dashboard);
