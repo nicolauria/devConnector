@@ -18,6 +18,9 @@ class NavBar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <Link className="nav-link" to="/dashboard">Dashboard</Link>
+        </li>
+        <li className="nav-item">
           <a href="#" onClick={this.onLogoutClick.bind(this)}
                       className="nav-link">
             <img src={user.avatar}
@@ -43,7 +46,7 @@ class NavBar extends React.Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4 sticky-top">
         <div className="container">
           <Link className="navbar-brand" to="/">DevConnector</Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">

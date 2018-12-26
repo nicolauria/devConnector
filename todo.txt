@@ -1,0 +1,6 @@
+clearCurrentUser used in Navbar.js and App.js
+- consider just putting action into logoutUser() function
+
+need to clear errors on register and login
+
+add login on register
