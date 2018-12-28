@@ -20,3 +20,6 @@ for example scrolling a form
 
 one of the props of our PrivateRoute is auth so when we delete an account
 and reset our auth state the PrivateRoute rerenders and redirects to login
+
+React elements are just plain objects. React DOM handles turning these objects
+into actual HTML elements
