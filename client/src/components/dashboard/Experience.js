@@ -5,17 +5,24 @@ import Moment from 'react-moment';
 import { deleteExperience } from '../../actions/profileActions';
 
 class Experience extends React.Component {
+
   onDeleteClick(id) {
-    this.props.deleteExperience(id);
+    if (this.props.auth.user.id === '5c26b5525928c71648d1fb99') {
+      alert('This action cannot be performed with demo account')
+    } else {
+      if (window.confirm('Are you sure you want to delete')) {
+        this.props.deleteExperience(id);
+      }
+    }
   }
 
   render() {
     const experience = this.props.experience.map(exp => (
       <tr key={exp._id}>
-        <td>{exp.company}</td>
-        <td>{exp.title}</td>
-        <td><Moment format="YYYY/MM/DD">{exp.from}</Moment> - {exp.to === null ? ('Now') : (<Moment format="YYYY/MM/DD">{exp.to}</Moment>)}</td>
-        <td><button onClick={this.onDeleteClick.bind(this, exp._id)} className="btn btn-danger">Delete</button></td>
+        <td width="25%">{exp.company}</td>
+        <td width="25%">{exp.title}</td>
+        <td width="30%"><Moment format="YYYY/MM/DD">{exp.from}</Moment> - {exp.to === null ? ('Now') : (<Moment format="YYYY/MM/DD">{exp.to}</Moment>)}</td>
+        <td width="20%"><button onClick={this.onDeleteClick.bind(this, exp._id)} className="btn btn-danger">Delete</button></td>
       </tr>
     ));
     return (
@@ -43,4 +50,8 @@ Experience.propTypes = {
   deleteExperience: PropTypes.func.isRequired
 };
 
-export default connect(null, { deleteExperience })(Experience);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { deleteExperience })(Experience);

@@ -35,6 +35,11 @@ class Login extends React.Component {
     this.props.loginUser(user);
   }
 
+  demoLogin() {
+    const demoUser = { email: 'nicolauria@outlook.com', password: 'secret' };
+    this.props.loginUser(demoUser);
+  }
+
   // Update this with Auth routes
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
@@ -71,6 +76,9 @@ class Login extends React.Component {
                   disabled={false} />
                 <input type="submit"
                        className="btn btn-info btn-block mt-4" />
+                 <small className="demo-login float-right mt-1" onClick={this.demoLogin.bind(this)}>
+                   <u>Demo Login</u>
+                 </small>
               </form>
             </div>
           </div>

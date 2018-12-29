@@ -1,13 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
 
 class Landing extends React.Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  async demoLogin() {
+    const user = { email: 'nicolauria@outlook.com', password: 'secret' };
+    await this.props.loginUser(user);
   }
 
   render() {
@@ -21,8 +33,15 @@ class Landing extends React.Component {
                 </h1>
                 <p className="lead"> Create a developer profile/portfolio, share posts and get help from other developers</p>
                 <hr />
-                <Link to="/register" className="btn btn-lg btn-info mr-2">Sign Up</Link>
-                <Link to="/login" className="btn btn-lg btn-light">Login</Link>
+                <div className="d-flex justify-content-center">
+                  <Link to="/register" className="btn btn-lg btn-info mr-2" style={{ height: '49px' }}>Sign Up</Link>
+                  <span className="d-flex flex-column" style={{ width: '10%' }}>
+                    <Link to="/login" className="btn btn-lg btn-light">Login</Link>
+                    <small className="demo-login mt-1" onClick={this.demoLogin.bind(this)}>
+                      Demo Login
+                    </small>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -40,4 +59,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, null)(Landing);
+export default connect(mapStateToProps, { loginUser })(withRouter(Landing));

@@ -14,7 +14,11 @@ class Dashboard extends React.Component {
   }
 
   onDeleteClick() {
-    this.props.deleteAccount();
+    if (this.props.profile.profile.handle === 'nicolauria') {
+      alert('This action cannot be performed with demo account')
+    } else {
+      this.props.deleteAccount();
+    }
   }
 
   render() {
@@ -36,7 +40,8 @@ class Dashboard extends React.Component {
             <Education education={profile.education} />
             <div style={{ marginbottom: '60px' }}>
               <button onClick={this.onDeleteClick.bind(this)}
-                      className="btn btn-danger">Delete My Account</button>
+                      className="btn btn-danger"
+                      style={{ marginTop: '50px' }}>Delete My Account</button>
             </div>
           </div>
         )
