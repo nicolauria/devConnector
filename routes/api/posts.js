@@ -83,10 +83,10 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req,
   .catch(err => res.status(404).json({ nopost: 'No post with that id'}));
 });
 
-// @route   DELETE api/posts/unlike/:id
+// @route   POST api/posts/unlike/:id
 // @desc    Unlike a post
 // @access  Private
-router.delete('/unlike/:id', passport.authenticate('jwt',{ session: false }), (req, res) => {
+router.post('/unlike/:id', passport.authenticate('jwt',{ session: false }), (req, res) => {
   Post.findById(req.params.id).then(post => {
     if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
       return res.status(400).json({ notliked: 'You have not liked this post'});
