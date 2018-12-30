@@ -2,20 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
+import Moment from 'react-moment';
 
 class PostItem extends Component {
-  onDeleteClick(id) {
-    this.props.deletePost(id);
+
+  onDeleteClick(id, history) {
+    return e => {
+      e.stopPropagation();
+      this.props.deletePost(id, history);
+    }
   }
 
   onLikeClick(id) {
-    this.props.addLike(id);
+    return e => {
+      e.stopPropagation();
+      this.props.addLike(id);
+    }
   }
 
   onUnlikeClick(id) {
-    this.props.removeLike(id);
+    return e => {
+      e.stopPropagation();
+      this.props.removeLike(id);
+    }
   }
 
   findUserLike(likes) {
@@ -27,29 +38,36 @@ class PostItem extends Component {
     }
   }
 
+  redirectToPost(e) {
+    this.props.history.push(`/post/${this.props.post._id}`);
+  }
+
   render() {
     const { post, auth, showActions } = this.props;
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+    const dateObject = new Date(post.date);
 
     return (
-      <div className="card card-body mb-3">
+      <div onClick={this.redirectToPost.bind(this)}>
+      <div className="card card-body mb-3 post-item-hover">
         <div className="row">
           <div className="col-md-2">
-            <Link to={`/profile/user/${post.user}`}>
+            <Link onClick='event.stopBubble = true' to={`/profile/user/${post.user}`}>
               <img
-                className="rounded-circle d-none d-md-block"
+                className="d-none d-md-block mb-2"
+                style={{ width: '75px', height: '75px', margin: '0 auto' }}
                 src={post.avatar}
                 alt=""
               />
             </Link>
-            <br />
-            <p className="text-center">{post.name}</p>
+            <p style={{ marginBottom: '0', textAlign: 'center' }}>{post.name}</p>
           </div>
-          <div className="col-md-10">
+          <div className="col-md-9 ml-5">
             <p className="lead">{post.text}</p>
             {showActions ? (
               <span>
                 <button
-                  onClick={this.onLikeClick.bind(this, post._id)}
+                  onClick={this.onLikeClick(post._id).bind(this)}
                   type="button"
                   className="btn btn-light mr-1"
                 >
@@ -58,21 +76,22 @@ class PostItem extends Component {
                       'text-info': this.findUserLike(post.likes)
                     })}
                   />
-                  <span className="badge badge-light">{post.likes.length}</span>
+                  <span className="badge">{post.likes.length}</span>
                 </button>
                 <button
-                  onClick={this.onUnlikeClick.bind(this, post._id)}
+                  onClick={this.onUnlikeClick(post._id).bind(this)}
                   type="button"
                   className="btn btn-light mr-1"
                 >
                   <i className="text-secondary fas fa-thumbs-down" />
                 </button>
                 <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
-                  Comments
+                  {post.comments.length === 1 ? '1 Comment' : post.comments.length
+                   + ' Comments'}
                 </Link>
                 {post.user === auth.user.id ? (
                   <button
-                    onClick={this.onDeleteClick.bind(this, post._id)}
+                    onClick={this.onDeleteClick(post._id, this.props.history).bind(this)}
                     type="button"
                     className="btn btn-danger mr-1"
                   >
@@ -81,8 +100,10 @@ class PostItem extends Component {
                 ) : null}
               </span>
             ) : null}
+            <span className="d-inline-block ml-5">Posted on: {dateObject.toLocaleDateString('en-US', dateOptions)}</span>
           </div>
         </div>
+      </div>
       </div>
     );
   }
@@ -105,5 +126,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { deletePost, addLike, removeLike })(
-  PostItem
+  withRouter(PostItem)
 );

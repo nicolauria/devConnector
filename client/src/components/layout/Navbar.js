@@ -19,9 +19,6 @@ class NavBar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/feed">Posts</Link>
-        </li>
-        <li className="nav-item">
           <Link className="nav-link" to="/dashboard">Dashboard</Link>
         </li>
         <li className="nav-item">
@@ -61,6 +58,9 @@ class NavBar extends React.Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link className="nav-link" to="/profiles">Developers</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/feed">Posts</Link>
               </li>
             </ul>
             {isAuthenticated ? authLinks : guestLinks}

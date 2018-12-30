@@ -34,6 +34,19 @@ export const getProfileByHandle = handle => dispatch => {
     }));
 }
 
+export const getProfileById = userId => dispatch => {
+  dispatch(setProfileLoading());
+  axios.get(`/api/profile/user/${userId}`)
+    .then(res => dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    }))
+    .catch(err => dispatch({
+      type: GET_PROFILE,
+      payload: null
+    }));
+}
+
 // Create/Edit profile
 export const createProfile = (profileData, history) => dispatch => {
   axios.post('/api/profile', profileData)

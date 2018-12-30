@@ -124,6 +124,39 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
   .catch(err => res.status(404).json({ postnotfound: 'No post found'}));
 });
 
+// @route   POST api/posts/like/:postId/:commentId
+// @desc    Like a comment
+// @access  Private
+router.post('/like/:postId/:commentId', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Post.findById(req.params.postId).then(post => {
+    const comment = post.comments.filter(el => el._id.toString() === req.params.commentId)[0];
+    if (comment.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+      return res.status(400).json({ alreadyliked: 'Comment already liked'});
+    }
+    comment.likes.unshift({ user: req.user.id });
+    post.save().then(post => res.json(post));
+  })
+  .catch(err => res.status(404).json({ nopost: 'No post with that id'}));
+});
+
+// @route   POST api/posts/unlike/:postId/:commentId
+// @desc    Unlike a comment
+// @access  Private
+router.post('/unlike/:postId/:commentId', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Post.findById(req.params.postId).then(post => {
+    const comment = post.comments.filter(el => el._id.toString() === req.params.commentId)[0];
+    if (comment.likes.filter(like => like.user.toString() === req.user.id).length < 1) {
+      return res.status(400).json({ notliked: 'Comment has not been liked'});
+    }
+    const removeIndex = comment.likes
+      .map(like => like.user.toString())
+      .indexOf(req.user.id)
+    comment.likes.splice(removeIndex, 1);
+    post.save().then(post => res.json(post));
+  })
+  .catch(err => res.status(404).json({ nopost: 'No post with that id'}));
+});
+
 // @route   DELETE api/posts/comment/:id/:comment_id
 // @desc    Add comment to post
 // @access  Private

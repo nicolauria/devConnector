@@ -7,13 +7,15 @@ import ProfileAbout from './ProfileAbout';
 import ProfileCreds from './ProfileCreds';
 import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/spinner';
-import { getProfileByHandle } from '../../actions/profileActions';
+import { getProfileByHandle, getProfileById } from '../../actions/profileActions';
 
 class Profile extends React.Component {
 
   componentDidMount() {
     if (this.props.match.params.handle) {
       this.props.getProfileByHandle(this.props.match.params.handle);
+    } else {
+      this.props.getProfileById(this.props.match.params.userId);
     }
   }
 
@@ -25,6 +27,7 @@ class Profile extends React.Component {
 
   render() {
     const { profile, loading } = this.props.profile;
+    console.log(profile);
 
     let profileContent;
     if (profile === null || loading === true) {
@@ -66,11 +69,12 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
-  getProfileByHandle: PropTypes.func.isRequired
+  getProfileByHandle: PropTypes.func.isRequired,
+  getProfileById: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
   profile: state.profile
 })
 
-export default connect(mapStateToProps, { getProfileByHandle })(Profile);
+export default connect(mapStateToProps, { getProfileByHandle, getProfileById })(Profile);

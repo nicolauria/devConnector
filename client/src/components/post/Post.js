@@ -21,8 +21,8 @@ class Post extends Component {
       postContent = <Spinner />;
     } else {
       postContent = (
-        <div>
-          <PostItem post={post} showActions={false} />
+        <div className="individual-post">
+          <PostItem post={post} />
           <CommentForm postId={post._id} />
           <CommentFeed postId={post._id} comments={post.comments} />
         </div>

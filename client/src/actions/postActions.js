@@ -68,7 +68,7 @@ export const getPost = id => dispatch => {
 };
 
 // Delete Post
-export const deletePost = id => dispatch => {
+export const deletePost = (id, history) => dispatch => {
   axios
     .delete(`/api/posts/${id}`)
     .then(res =>
@@ -77,6 +77,7 @@ export const deletePost = id => dispatch => {
         payload: id
       })
     )
+    .then(history.push('/feed'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -89,7 +90,13 @@ export const deletePost = id => dispatch => {
 export const addLike = id => dispatch => {
   axios
     .post(`/api/posts/like/${id}`)
-    .then(res => dispatch(getPosts()))
+    .then(res =>
+      dispatch({
+        type: GET_POST,
+        payload: res.data
+      })
+    )
+    .then(() => dispatch(getPosts()))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -102,7 +109,13 @@ export const addLike = id => dispatch => {
 export const removeLike = id => dispatch => {
   axios
     .post(`/api/posts/unlike/${id}`)
-    .then(res => dispatch(getPosts()))
+    .then(res =>
+      dispatch({
+        type: GET_POST,
+        payload: res.data
+      })
+    )
+    .then(() => dispatch(getPosts()))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -122,6 +135,38 @@ export const addComment = (postId, commentData) => dispatch => {
         payload: res.data
       })
     )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Like Comment
+export const addCommentLike = (postId, commentId) => dispatch => {
+  axios
+    .post(`/api/posts/like/${postId}/${commentId}`)
+    .then(res => dispatch({
+      type: GET_POST,
+      payload: res.data
+    }))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Unlike Comment
+export const removeCommentLike = (postId, commentId) => dispatch => {
+  axios
+  .post(`/api/posts/unlike/${postId}/${commentId}`)
+    .then(res => dispatch({
+      type: GET_POST,
+      payload: res.data
+    }))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
