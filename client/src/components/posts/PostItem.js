@@ -57,7 +57,7 @@ class PostItem extends Component {
       <div className="card card-body mb-3 post-item-hover">
         <div className="row">
           <div className="col-md-2">
-            <Link onClick='event.stopBubble = true' to={`/profile/user/${post.user}`}>
+            <Link onClick='event.stopBubble = true' to={`/profile/user/${post.user.toString()}`}>
               <img
                 className="d-none d-md-block mb-2"
                 style={{ width: '75px', height: '75px', margin: '0 auto' }}

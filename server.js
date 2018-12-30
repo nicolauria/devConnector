@@ -39,3 +39,9 @@ app.use('/api/posts', posts);
 const passport = require('passport');
 require('./config/passport')(passport);
 app.use(passport.initialize());
+
+// ping the app every 15 minutes
+var http = require("http");
+setInterval(function() {
+    http.get("https://dev-connector-v1.herokuapp.com");
+}, 900000);
