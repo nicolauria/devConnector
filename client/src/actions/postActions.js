@@ -77,7 +77,7 @@ export const deletePost = (id, history) => dispatch => {
         payload: id
       })
     )
-    .then(history.push('/feed'))
+    .then(() => history.push('/feed'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

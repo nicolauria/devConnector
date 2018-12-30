@@ -10,8 +10,13 @@ class PostItem extends Component {
 
   onDeleteClick(id, history) {
     return e => {
-      e.stopPropagation();
-      this.props.deletePost(id, history);
+      if (this.props.auth.user.id === '5c26b5525928c71648d1fb99') {
+        alert('This action cannot be performed with demo account')
+        e.stopPropagation();
+      } else {
+        e.stopPropagation();
+        this.props.deletePost(id, history);
+      }
     }
   }
 

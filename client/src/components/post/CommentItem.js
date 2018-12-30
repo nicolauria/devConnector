@@ -6,7 +6,11 @@ import { addCommentLike, removeCommentLike, deleteComment } from '../../actions/
 
 class CommentItem extends Component {
   onDeleteClick(postId, commentId) {
-    this.props.deleteComment(postId, commentId);
+    if (this.props.auth.user.id === '5c26b5525928c71648d1fb99') {
+      alert('This action cannot be performed with demo account')
+    } else {
+      this.props.deleteComment(postId, commentId);
+    }
   }
 
   likeComment(postId, commentId) {

@@ -112,7 +112,11 @@ class CreateProfile extends Component {
       instagram: this.state.instagram
     };
 
-    this.props.createProfile(profileData, this.props.history);
+    if (this.props.auth.user.id === '5c26b5525928c71648d1fb99') {
+      alert('This action cannot be performed with demo account')
+    } else {
+      this.props.createProfile(profileData, this.props.history);
+    }
   }
 
   onChange(e) {
@@ -303,6 +307,7 @@ CreateProfile.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   profile: state.profile,
   errors: state.errors
 });
