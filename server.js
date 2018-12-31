@@ -41,7 +41,7 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 
 // ping the app every 15 minutes
-var http = require("http");
+var https = require("https");
 setInterval(function() {
-    http.get("https://dev-connector-v1.herokuapp.com");
+    https.get("https://dev-connector-v1.herokuapp.com");
 }, 900000);
