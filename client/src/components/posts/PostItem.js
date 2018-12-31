@@ -47,6 +47,12 @@ class PostItem extends Component {
     this.props.history.push(`/post/${this.props.post._id}`);
   }
 
+  redirectToProfile(e) {
+    const { user } = this.props.post;
+    e.stopPropagation();
+    this.props.history.push(`/profile/user/${user.toString()}`);
+  }
+
   render() {
     const { post, auth, showActions } = this.props;
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
@@ -57,14 +63,14 @@ class PostItem extends Component {
       <div className="card card-body mb-3 post-item-hover">
         <div className="row">
           <div className="col-md-2">
-            <Link onClick='event.stopBubble = true' to={`/profile/user/${post.user.toString()}`}>
+            <span onClick={this.redirectToProfile.bind(this)}>
               <img
                 className="d-none d-md-block mb-2 avatar-image"
                 style={{ width: '75px', height: '75px', margin: '0 auto' }}
                 src={post.avatar}
                 alt=""
               />
-            </Link>
+            </span>
             <p style={{ marginBottom: '0', textAlign: 'center' }}>{post.name}</p>
           </div>
           <div className="col-md-9 ml-5">

@@ -15,9 +15,7 @@ class Profile extends React.Component {
     if (this.props.match.params.handle) {
       this.props.getProfileByHandle(this.props.match.params.handle);
     } else {
-      this.props.getProfileById('5c25be6ec8e13020f0b126ee');
-      console.log('method was run');
-      // this.props.getProfileById(this.props.match.params.userId);
+      this.props.getProfileById(this.props.match.params.userId);
     }
   }
 
