@@ -56,3 +56,7 @@ img {
 .individual-post .post-item-hover {
   border: 1px solid #17a2b8;
 }
+
+.avatar-image:hover {
+  border: 3px solid #17a2b8;
+}

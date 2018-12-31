@@ -59,7 +59,7 @@ class PostItem extends Component {
           <div className="col-md-2">
             <Link onClick='event.stopBubble = true' to={`/profile/user/${post.user.toString()}`}>
               <img
-                className="d-none d-md-block mb-2"
+                className="d-none d-md-block mb-2 avatar-image"
                 style={{ width: '75px', height: '75px', margin: '0 auto' }}
                 src={post.avatar}
                 alt=""
