@@ -5,7 +5,7 @@ The backend of Developer Connector is Express/MongoDB. The frontend is React/Red
 [https://dev-connector-v1.herokuapp.com](https://dev-connector-v1.herokuapp.com)
 
 ## Routes
-All API endpoints for the application are managed in three files: posts.js, profile.js, users.js
+All API endpoints for the application are managed in three files: posts.js, profile.js, users.js<br />
 Bcrypt is used for password hashing
 Passport and JWT are used to send/authenticate user web tokens
 
