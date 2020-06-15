@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
-import TextFieldGroup from '../common/TextFieldGroup';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: ""
+    };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -18,12 +18,12 @@ class Login extends React.Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push("/dashboard");
     }
   }
 
   onChange(e) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   onSubmit(e) {
@@ -36,14 +36,14 @@ class Login extends React.Component {
   }
 
   demoLogin() {
-    const demoUser = { email: 'nicolauria@outlook.com', password: 'secret' };
+    const demoUser = { email: "nicolauria@outlook.com", password: "secret" };
     this.props.loginUser(demoUser);
   }
 
   // Update this with Auth routes
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push("/dashboard");
     }
   }
 
@@ -56,7 +56,9 @@ class Login extends React.Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">Sign in to your DevConnector account</p>
+              <p className="lead text-center">
+                Sign in to your DevConnector account
+              </p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   name="email"
@@ -65,7 +67,8 @@ class Login extends React.Component {
                   error={errors.email}
                   type="email"
                   onChange={this.onChange}
-                  disabled={false} />
+                  disabled={false}
+                />
                 <TextFieldGroup
                   name="password"
                   placeHolder="Password"
@@ -73,18 +76,21 @@ class Login extends React.Component {
                   error={errors.password}
                   type="password"
                   onChange={this.onChange}
-                  disabled={false} />
-                <input type="submit"
-                       className="btn btn-info btn-block mt-4" />
-                 <small className="demo-login float-right mt-1" onClick={this.demoLogin.bind(this)}>
-                   <u>Demo Login</u>
-                 </small>
+                  disabled={false}
+                />
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <small
+                  className="demo-login float-right mt-1"
+                  onClick={this.demoLogin.bind(this)}
+                >
+                  <u>Demo Login</u>
+                </small>
               </form>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -92,7 +98,7 @@ Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = state => ({
   auth: state.auth,
